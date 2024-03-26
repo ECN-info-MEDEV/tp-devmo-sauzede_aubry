@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat">
+        <!-- Modifier la couleur de fond de l'application -->
+        <item name="android:windowBackground">#8F3232</item>
+        <!-- Modifier la couleur des textes -->
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="Theme.Locare_devmo" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
