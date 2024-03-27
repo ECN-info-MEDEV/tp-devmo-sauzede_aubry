@@ -1,26 +1,20 @@
 package com.devmo.locare_devmo
 import NotificationViewModel
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
@@ -32,32 +26,23 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Shapes
 import androidx.compose.material3.Surface
-import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import java.io.BufferedReader
-import java.io.File
-import java.io.FileInputStream
-import java.io.InputStream
-import java.io.InputStreamReader
 
 
 //On définit la classe de données notification
@@ -74,11 +59,14 @@ fun HomeScreen(
     onDeleteClick: (Notification) -> Unit // Callback pour la suppression
 ) {
     Surface(
-        color = Color(0xFF8F3232), // Couleur #8F3232
         modifier = Modifier.fillMaxSize()
     ) {
         Scaffold(
-            topBar = { TopAppBar(title = { Text(text = "Locare") }) },
+            topBar = { TopAppBar(title = {Text(
+                text = "Locare",
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            ) }) },
             content = {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
@@ -125,15 +113,12 @@ fun DetailScreenPreview() {
             note = -1
         ),
         onSendRating = {
-            // C'est une fonction lambda factice pour la preview
-            // Vous pouvez laisser le corps vide ou simuler une action ici
         },
         viewModel=NotificationViewModel()
     )
 }
 
-//Définit le composable d'une liste de notifications
-@OptIn(ExperimentalMaterial3Api::class)
+//Définit le composable de la liste de notifications
 @Composable
 fun NotificationList(
     notifications: List<Notification>,
@@ -210,7 +195,6 @@ fun DeleteIcon(
 //Définit l'écran de notation
 @Composable
 fun RatingFeedback(
-    onRatingChanged: (Int) -> Unit,
     onSendClicked: () -> Unit,
     viewModel: NotificationViewModel,
     header: String
@@ -287,7 +271,6 @@ fun DetailScreen(notification: Notification, onSendRating: () -> Unit, viewModel
         content = {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(text = notification.content, style = MaterialTheme.typography.bodyMedium)
-                // Add more details or interaction components here if needed
                 if (notification.note != -1) {
                     Row(
                         horizontalArrangement = Arrangement.Center,
@@ -304,9 +287,6 @@ fun DetailScreen(notification: Notification, onSendRating: () -> Unit, viewModel
                 }
                 Text(text = notification.content, style = MaterialTheme.typography.bodyMedium)
                 RatingFeedback(
-                    onRatingChanged = {
-
-                    },
                     onSendClicked = onSendRating,
                     header = notification.header,
                     viewModel = viewModel
